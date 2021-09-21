@@ -132,6 +132,8 @@ func handleChatServiceRule(outputMsgs chan<- models.Message, message models.Mess
 
 			message.Vars["_raw_user_input"] = message.Input
 			message.Vars["_is_thread_message"] = strconv.FormatBool(message.ThreadTimestamp != "")
+			// Create a variable for all arguments without the matched trigger
+			message.Vars["_raw_arguments"] = strings.Replace(message.Input, rule.Respond+" ", "", 1)
 
 			// Do additional checks on the rule before running
 			if !isValidHitChatRule(&message, rule, processedInput, bot) {
